@@ -1,0 +1,30 @@
+name: ReleaseV2
+on:
+  create:
+    tags:
+    - v*
+
+jobs:
+  release:
+    name: Release on GitHub
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set Version
+      run: . ./setcurrenttag.sh
+
+    - name: Build Binary
+      run: make build
+
+    - name: Tar
+      run: make tar
+
+    - name: Create Release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+       repo_token: "${{ secrets.GITHUB_TOKEN }}"
+       prerelease: false
+       files: |
+         authy.tar.gz

@@ -1,0 +1,6 @@
+# go mod cache
+.mod/
+authy-*
+.idea/*
+authy
+data/*
